@@ -10,8 +10,8 @@ public interface TransacaoServico {
 
     Arquivo uploadTransacao(MultipartFile multipartFile);
 
-    TransacaoTipo salvar(TransacaoTipo transacaoTipo);
+    TransacaoTipo salvarTransacaoTipo(TransacaoTipo transacaoTipo);
 
-    List<TransacaoTipo> findAll();
+    List<TransacaoTipo> buscarTodosTransacaoTipo();
 
 }

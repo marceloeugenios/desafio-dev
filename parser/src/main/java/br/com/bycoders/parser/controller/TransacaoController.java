@@ -1,5 +1,6 @@
 package br.com.bycoders.parser.controller;
 
+import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.servico.TransacaoServico;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +21,25 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequestMapping(value = "api/v1/transacao")
 public class TransacaoController {
 
-    private final TransacaoServico transacaoTipoServico;
+    private final TransacaoServico transacaoServico;
 
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/upload", consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_PROBLEM_JSON_VALUE)
-    public ResponseEntity<?> postArquivoTransacao(@RequestParam("arquivo")MultipartFile arquivo) {
+    public ResponseEntity<Arquivo> postArquivoTransacao(@RequestParam("arquivo") MultipartFile multipartFile) {
 
-        log.info("Fazendo upload: {}", arquivo.getOriginalFilename());
+        log.info("Fazendo upload: {}", multipartFile.getOriginalFilename());
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        var arquivo = transacaoServico.uploadTransacao(multipartFile);
+
+        return ResponseEntity.ok(arquivo);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
-    public ResponseEntity<List<TransacaoTipo>> getTiposTransacoes() {
+    public ResponseEntity<List<TransacaoTipo>> getTiposTransacao() {
 
-        var all = transacaoTipoServico.findAll();
+        var all = transacaoServico.buscarTodosTransacaoTipo();
 
         return ResponseEntity.ok(all);
 
