@@ -1,6 +1,6 @@
 package br.com.bycoders.parser.controller;
 
-import br.com.bycoders.parser.controller.wrapper.TransacaoWrapper;
+import br.com.bycoders.parser.dto.TransacaoDTO;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.servico.TransacaoServico;
@@ -39,12 +39,12 @@ public class TransacaoController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/filtro", produces = APPLICATION_PROBLEM_JSON_VALUE)
-    public ResponseEntity<TransacaoWrapper> getTransacaoPorFiltro(@RequestParam(name = "lojaNome") String lojaNome) {
+    @GetMapping(value = "/extrato", produces = APPLICATION_PROBLEM_JSON_VALUE)
+    public ResponseEntity<List<TransacaoDTO>> getExtratoPorLojas() {
 
-        var all = transacaoServico.buscarPorLojaNome(lojaNome);
+        var all = transacaoServico.exratoPorLojas();
 
-        return ResponseEntity.ok(new TransacaoWrapper(all));
+        return ResponseEntity.ok(all);
 
     }
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @UtilityClass
-public class DateUtil {
+public class DataUtil {
 
     public LocalDateTime fromStringToLocalDateTime(String dataHorario) {
         var formatter = DateTimeFormatter.ofPattern("yyyyMMdd HHmmss");

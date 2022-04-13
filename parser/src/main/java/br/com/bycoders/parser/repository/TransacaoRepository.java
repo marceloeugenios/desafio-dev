@@ -1,9 +1,9 @@
 package br.com.bycoders.parser.repository;
 
+import br.com.bycoders.parser.dto.TransacaoDTO;
 import br.com.bycoders.parser.model.Transacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,10 +11,16 @@ import java.util.List;
 @Repository
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
-    @Query("SELECT t from Transacao t " +
-            "JOIN FETCH t.transacaoTipo tp " +
-            "WHERE t.lojaNome = :lojaNome " +
-            "ORDER BY t.id")
-    List<Transacao> findByLojaNome(@Param("lojaNome") String lojaName);
+    @Query("SELECT new br.com.bycoders.parser.dto.TransacaoDTO(tx.lojaNome, " +
+
+            "       (SELECT sum(t.valor) FROM Transacao t JOIN t.transacaoTipo tp " +
+            "WHERE t.lojaNome = tx.lojaNome AND tp.transacaoNatureza = 'ENTRADA') AS entrada, " +
+
+            "       (SELECT sum(t.valor) FROM Transacao t JOIN t.transacaoTipo tp " +
+            "WHERE t.lojaNome = tx.lojaNome AND tp.transacaoNatureza = 'SAIDA')   AS saida) " +
+
+            "FROM Transacao tx " +
+            "GROUP BY tx.lojaNome")
+    List<TransacaoDTO> findExtratoPorLojas();
 
 }

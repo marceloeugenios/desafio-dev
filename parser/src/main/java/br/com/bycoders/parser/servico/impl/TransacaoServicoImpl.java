@@ -1,5 +1,6 @@
 package br.com.bycoders.parser.servico.impl;
 
+import br.com.bycoders.parser.dto.TransacaoDTO;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.Transacao;
 import br.com.bycoders.parser.repository.ArquivoRepository;
@@ -48,7 +49,7 @@ public class TransacaoServicoImpl implements TransacaoServico {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Transacao> buscarPorLojaNome(String lojaNome) {
-        return transacaoRepository.findByLojaNome(lojaNome);
+    public List<TransacaoDTO> exratoPorLojas() {
+        return transacaoRepository.findExtratoPorLojas();
     }
 }

@@ -45,7 +45,7 @@ public class ParserUtil {
         var nomeLoja = linha.substring(62).trim();
 
         var dataHoraCompleta = dataTransacao + " " + horaTransacao;
-        var dateTime = DateUtil.fromStringToLocalDateTime(dataHoraCompleta);
+        var dateTime = DataUtil.fromStringToLocalDateTime(dataHoraCompleta);
         return Transacao.builder()
                 .transacaoTipo(new TransacaoTipo(tipo))
                 .dataTransacao(dateTime)
