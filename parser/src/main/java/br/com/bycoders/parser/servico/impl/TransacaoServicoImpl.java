@@ -1,11 +1,10 @@
-package br.com.bycoders.parser.servico;
+package br.com.bycoders.parser.servico.impl;
 
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.Transacao;
-import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.repository.ArquivoRepository;
 import br.com.bycoders.parser.repository.TransacaoRepository;
-import br.com.bycoders.parser.repository.TransacaoTipoRepository;
+import br.com.bycoders.parser.servico.TransacaoServico;
 import br.com.bycoders.parser.util.ParserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,6 @@ public class TransacaoServicoImpl implements TransacaoServico {
 
     private final ArquivoRepository arquivoRepository;
     private final TransacaoRepository transacaoRepository;
-    private final TransacaoTipoRepository transacaoTipoRepository;
 
     @Override
     @Transactional
@@ -41,7 +39,7 @@ public class TransacaoServicoImpl implements TransacaoServico {
         var savedArquivo = arquivoRepository.save(arquivo);
 
         var todos = transacoes.stream()
-                   .peek(transacao -> transacao.configurarArquivo(arquivo)).collect(Collectors.toList());
+                   .peek(transacao -> transacao.setArquivo(arquivo)).collect(Collectors.toList());
 
         transacaoRepository.saveAll(todos);
 
@@ -49,14 +47,8 @@ public class TransacaoServicoImpl implements TransacaoServico {
     }
 
     @Override
-    @Transactional
-    public TransacaoTipo salvarTransacaoTipo(TransacaoTipo transacaoTipo) {
-        return transacaoTipoRepository.save(transacaoTipo);
-    }
-
-    @Override
     @Transactional(readOnly = true)
-    public List<TransacaoTipo> buscarTodosTransacaoTipo() {
-        return transacaoTipoRepository.findAll();
+    public List<Transacao> buscarPorLojaNome(String lojaNome) {
+        return transacaoRepository.findByLojaNome(lojaNome);
     }
 }

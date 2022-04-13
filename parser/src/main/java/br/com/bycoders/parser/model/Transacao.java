@@ -1,11 +1,11 @@
 package br.com.bycoders.parser.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,7 +20,7 @@ public class Transacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    private BigDecimal valor;
+    private Double valor;
     @NotNull
     @Column(name = "cpf", length = 11)
     private String cpf;
@@ -39,6 +39,8 @@ public class Transacao {
     @JoinColumn(name = "_transacao_tipo", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private TransacaoTipo transacaoTipo;
+    @Setter
+    @JsonIgnore
     @JoinColumn(name = "_arquivo", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Arquivo arquivo;
@@ -46,10 +48,5 @@ public class Transacao {
     @Tolerate
     public Transacao() {
 
-    }
-
-    public Transacao configurarArquivo(Arquivo arquivo) {
-        this.arquivo = arquivo;
-        return this;
     }
 }

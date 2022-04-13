@@ -7,8 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TransacaoNatureza {
 
-    ENTRADA("+"),
-    SAIDA("-");
-
-    private String sinal;
+    SALDO,
+    ENTRADA,
+    SAIDA
 }
