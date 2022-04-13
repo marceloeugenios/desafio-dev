@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -17,6 +18,12 @@ import java.util.stream.Collectors;
 public class ParserUtil {
 
     public List<Transacao> parseFile(MultipartFile multipartFile) {
+        if (Objects.isNull(multipartFile) || Objects.isNull(multipartFile.getOriginalFilename())) {
+            throw new IllegalArgumentException("Arquivo invalido!");
+        }
+        if (!multipartFile.getOriginalFilename().toLowerCase().endsWith(".txt")) {
+            throw new IllegalArgumentException("Extensao de arquivo invalida!");
+        }
         try (var inputStream = multipartFile.getInputStream()) {
             var linhas = new BufferedReader(new InputStreamReader(inputStream))
                     .lines()
@@ -24,17 +31,19 @@ public class ParserUtil {
                     .map(String::toUpperCase)
                     .collect(Collectors.toList());
             if (linhas.isEmpty()) {
-                throw new IOException("Arquivo vazio!");
+                throw new IllegalArgumentException("Arquivo vazio!");
             }
             return linhas.stream()
                     .map(ParserUtil::parseToTransacao)
                     .collect(Collectors.toList());
         } catch (IOException ioex) {
+            log.error("Erro no parser do arquivo: ", ioex);
             throw new IllegalArgumentException(ioex.getMessage());
         }
     }
 
     private Transacao parseToTransacao(String linha) {
+        log.info("{}", linha);
         var tipo = Integer.parseInt(linha.substring(0, 1));
         var dataTransacao = linha.substring(1, 9);
         var valor = Double.parseDouble(linha.substring(9, 19)) / 100;
