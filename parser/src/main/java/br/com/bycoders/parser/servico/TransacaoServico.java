@@ -10,6 +10,6 @@ public interface TransacaoServico {
 
     Arquivo uploadTransacao(MultipartFile multipartFile);
 
-    List<TransacaoDTO> exratoPorLojas();
+    List<TransacaoDTO> extratoPorLoja();
 
 }

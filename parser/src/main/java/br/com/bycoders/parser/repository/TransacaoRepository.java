@@ -13,14 +13,15 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
     @Query("SELECT new br.com.bycoders.parser.dto.TransacaoDTO(tx.lojaNome, " +
 
-            "       (SELECT sum(t.valor) FROM Transacao t JOIN t.transacaoTipo tp " +
+            "(SELECT sum(t.valor) FROM Transacao t JOIN t.transacaoTipo tp " +
             "WHERE t.lojaNome = tx.lojaNome AND tp.transacaoNatureza = 'ENTRADA') AS entrada, " +
 
-            "       (SELECT sum(t.valor) FROM Transacao t JOIN t.transacaoTipo tp " +
-            "WHERE t.lojaNome = tx.lojaNome AND tp.transacaoNatureza = 'SAIDA')   AS saida) " +
+            "(SELECT sum(t.valor) FROM Transacao t JOIN t.transacaoTipo tp " +
+            "WHERE t.lojaNome = tx.lojaNome AND tp.transacaoNatureza = 'SAIDA') AS saida) " +
 
             "FROM Transacao tx " +
-            "GROUP BY tx.lojaNome")
-    List<TransacaoDTO> findExtratoPorLojas();
+            "GROUP BY tx.lojaNome " +
+            "ORDER BY tx.lojaNome")
+    List<TransacaoDTO> extratoAgrupadoPorLoja();
 
 }

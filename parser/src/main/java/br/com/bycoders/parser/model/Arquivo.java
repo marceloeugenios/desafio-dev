@@ -15,9 +15,11 @@ public class Arquivo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "nome", length = 200)
+    @NotNull
+    @Column(name = "nome", length = 200, nullable = false)
     private String nome;
-    @Column(name = "data_upload")
+    @NotNull
+    @Column(name = "data_upload", nullable = false)
     private LocalDateTime dataUpload;
     @NotNull
     @Column(name = "usuario_id", nullable = false)

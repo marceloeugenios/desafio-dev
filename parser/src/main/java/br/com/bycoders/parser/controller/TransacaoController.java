@@ -42,9 +42,9 @@ public class TransacaoController {
     @GetMapping(value = "/extrato", produces = APPLICATION_PROBLEM_JSON_VALUE)
     public ResponseEntity<List<TransacaoDTO>> getExtratoPorLojas() {
 
-        var all = transacaoServico.exratoPorLojas();
+        var extrato = transacaoServico.extratoPorLoja();
 
-        return ResponseEntity.ok(all);
+        return ResponseEntity.ok(extrato);
 
     }
 
@@ -52,9 +52,9 @@ public class TransacaoController {
     @PostMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
     public ResponseEntity<TransacaoTipo> postTransacaoTipo(@RequestBody TransacaoTipo transacaoTipo) {
 
-        var all = transacaoTipoServico.salvar(transacaoTipo);
+        transacaoTipo = transacaoTipoServico.salvar(transacaoTipo);
 
-        return ResponseEntity.ok(all);
+        return ResponseEntity.ok(transacaoTipo);
 
     }
 
@@ -62,9 +62,9 @@ public class TransacaoController {
     @GetMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
     public ResponseEntity<List<TransacaoTipo>> getTransacaoTipos() {
 
-        var all = transacaoTipoServico.buscarTodos();
+        var tipos = transacaoTipoServico.buscarTodos();
 
-        return ResponseEntity.ok(all);
+        return ResponseEntity.ok(tipos);
 
     }
 }

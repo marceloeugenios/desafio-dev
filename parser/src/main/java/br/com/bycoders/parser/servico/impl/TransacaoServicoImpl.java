@@ -37,19 +37,20 @@ public class TransacaoServicoImpl implements TransacaoServico {
         arquivo.setNome(multipartFile.getOriginalFilename());
         arquivo.setUsuarioId(UUID.randomUUID());
 
-        var savedArquivo = arquivoRepository.save(arquivo);
+        var arquivoSalvo = arquivoRepository.save(arquivo);
 
-        var todos = transacoes.stream()
-                   .peek(transacao -> transacao.setArquivo(arquivo)).collect(Collectors.toList());
+        transacoes = transacoes.stream()
+                .peek(transacao -> transacao.setArquivo(arquivo))
+                .collect(Collectors.toList());
 
-        transacaoRepository.saveAll(todos);
+        transacaoRepository.saveAll(transacoes);
 
-        return savedArquivo;
+        return arquivoSalvo;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransacaoDTO> exratoPorLojas() {
-        return transacaoRepository.findExtratoPorLojas();
+    public List<TransacaoDTO> extratoPorLoja() {
+        return transacaoRepository.extratoAgrupadoPorLoja();
     }
 }

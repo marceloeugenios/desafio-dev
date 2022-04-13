@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -14,10 +15,12 @@ public class TransacaoTipo {
 
     @Id
     private Integer id;
-    @Column(length = 200)
+    @NotNull
+    @Column(length = 200, nullable = false)
     private String descricao;
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "transacao_natureza", length = 50)
+    @Column(name = "transacao_natureza", length = 50, nullable = false)
     private TransacaoNatureza transacaoNatureza;
 
     public TransacaoTipo(Integer id) {
