@@ -2,8 +2,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-    show_sql: true
-    format_sql: true
+    show_sql: false
     generate-ddl: true
     ddl-auto: none
   h2:

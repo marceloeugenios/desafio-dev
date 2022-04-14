@@ -1,6 +1,6 @@
 package br.com.bycoders.parser.servico.impl;
 
-import br.com.bycoders.parser.dto.TransacaoDTO;
+import br.com.bycoders.parser.dto.ExtratoDTO;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.Transacao;
 import br.com.bycoders.parser.repository.ArquivoRepository;
@@ -32,6 +32,8 @@ public class TransacaoServicoImpl implements TransacaoServico {
 
         List<Transacao> transacoes = ParserUtil.parseFile(multipartFile);
 
+        log.info("Quantidade trasações: {}", transacoes.size());
+
         Arquivo arquivo = new Arquivo();
         arquivo.setDataUpload(LocalDateTime.now());
         arquivo.setNome(multipartFile.getOriginalFilename());
@@ -50,7 +52,7 @@ public class TransacaoServicoImpl implements TransacaoServico {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransacaoDTO> extratoPorLoja() {
+    public List<ExtratoDTO> extratoPorLoja() {
         return transacaoRepository.extratoAgrupadoPorLoja();
     }
 }

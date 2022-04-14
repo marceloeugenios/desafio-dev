@@ -1,10 +1,12 @@
 package br.com.bycoders.parser.controller;
 
-import br.com.bycoders.parser.dto.TransacaoDTO;
+import br.com.bycoders.parser.dto.ExtratoDTO;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.servico.TransacaoServico;
 import br.com.bycoders.parser.servico.TransacaoTipoServico;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,14 @@ public class TransacaoController {
     private final TransacaoTipoServico transacaoTipoServico;
 
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            operationId = "arquivoUpload",
+            summary = "Faz a importação de arquivo txt no layout do **CNAB**",
+            description = "Arquivo de exemplo e informações de sua estrutura pode ser encontrado em **https://github.com/marceloeugenios/desafio-dev**.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Importação realizada com sucesso - Transações cadastradas")
+            }
+    )
     @PostMapping(value = "/upload", consumes = MULTIPART_FORM_DATA_VALUE,
             produces = APPLICATION_PROBLEM_JSON_VALUE)
     public ResponseEntity<Arquivo> postArquivoTransacao(@RequestParam("arquivo") MultipartFile multipartFile) {
@@ -35,12 +45,19 @@ public class TransacaoController {
 
         var arquivo = transacaoServico.uploadTransacao(multipartFile);
 
-        return ResponseEntity.ok(arquivo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(arquivo);
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @Operation(
+            operationId = "lojasExtrato",
+            summary = "Retorna o Extrato por loja com o saldo",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Extrato retornado com sucesso")
+            }
+    )
     @GetMapping(value = "/extrato", produces = APPLICATION_PROBLEM_JSON_VALUE)
-    public ResponseEntity<List<TransacaoDTO>> getExtratoPorLojas() {
+    public ResponseEntity<List<ExtratoDTO>> getExtratoPorLojas() {
 
         var extrato = transacaoServico.extratoPorLoja();
 
@@ -49,6 +66,13 @@ public class TransacaoController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            operationId = "transacaoTipoCadastro",
+            summary = "Cadastra Tipo de Transação",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Tipo de Transação cadastrada com sucesso")
+            }
+    )
     @PostMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
     public ResponseEntity<TransacaoTipo> postTransacaoTipo(@RequestBody TransacaoTipo transacaoTipo) {
 
@@ -58,6 +82,13 @@ public class TransacaoController {
 
     }
 
+    @Operation(
+            operationId = "transacaoTipoObter",
+            summary = "Retorna a lista de tipos de transações",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Tipos de Transações retornadas com sucesso")
+            }
+    )
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
     public ResponseEntity<List<TransacaoTipo>> getTransacaoTipos() {

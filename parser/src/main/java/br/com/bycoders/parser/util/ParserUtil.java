@@ -4,6 +4,7 @@ import br.com.bycoders.parser.model.Transacao;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -12,6 +13,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static java.lang.String.format;
 
 @Slf4j
 @UtilityClass
@@ -34,6 +37,8 @@ public class ParserUtil {
                 throw new IllegalArgumentException("Arquivo vazio!");
             }
             return linhas.stream()
+                    .filter(Objects::nonNull)
+                    .filter(Strings::isNotEmpty)
                     .map(ParserUtil::parseToTransacao)
                     .collect(Collectors.toList());
         } catch (IOException ioex) {
@@ -52,6 +57,9 @@ public class ParserUtil {
         var horaTransacao = linha.substring(42, 48);
         var donoLoja = linha.substring(48, 62).trim();
         var nomeLoja = linha.substring(62).trim();
+        if (!Util.isCpfValido(cpf)) {
+            throw new IllegalArgumentException(format("CPF %s informado não é válido!", cpf));
+        }
 
         var dataHoraCompleta = dataTransacao + " " + horaTransacao;
         var dateTime = DataUtil.fromStringToLocalDateTime(dataHoraCompleta);
