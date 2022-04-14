@@ -3,7 +3,6 @@ package br.com.bycoders.parser.servico.impl;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.repository.TransacaoTipoRepository;
 import br.com.bycoders.parser.servico.TransacaoTipoServico;
-import br.com.bycoders.parser.util.TransacaoNatureza;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
