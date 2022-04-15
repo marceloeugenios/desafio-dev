@@ -1,7 +1,8 @@
 package br.com.bycoders.parser.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -9,9 +10,10 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
 @Table
 @Entity
+@NoArgsConstructor
 public class Arquivo {
 
     @Id
@@ -30,4 +32,9 @@ public class Arquivo {
     @Column(name = "usuario_id", nullable = false)
     private UUID usuarioId;
 
+    public Arquivo(String nome, UUID usuarioId) {
+        this.dataUpload = LocalDateTime.now();
+        this.nome = nome;
+        this.usuarioId = usuarioId;
+    }
 }

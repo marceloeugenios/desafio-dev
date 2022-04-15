@@ -14,13 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+import static org.springframework.http.MediaType.*;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "api/v1/transacao")
@@ -38,8 +37,8 @@ public class TransacaoController {
                     @ApiResponse(responseCode = "201", description = "Importação realizada com sucesso - Transações cadastradas")
             }
     )
-    @PostMapping(value = "/upload", consumes = MULTIPART_FORM_DATA_VALUE,
-            produces = APPLICATION_PROBLEM_JSON_VALUE)
+    @RolesAllowed("admin")
+    @PostMapping(value = "/upload", consumes = MULTIPART_FORM_DATA_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Arquivo> postArquivoTransacao(@RequestParam("arquivo") MultipartFile multipartFile) {
 
         log.info("Fazendo upload: {}", multipartFile.getOriginalFilename());
@@ -57,7 +56,8 @@ public class TransacaoController {
                     @ApiResponse(responseCode = "200", description = "Extrato retornado com sucesso")
             }
     )
-    @GetMapping(value = "/extrato", produces = APPLICATION_PROBLEM_JSON_VALUE)
+    @RolesAllowed("user")
+    @GetMapping(value = "/extrato", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ExtratoDTO>> getExtratoPorLojas() {
 
         var extrato = transacaoServico.extratoPorLoja();
@@ -74,7 +74,8 @@ public class TransacaoController {
                     @ApiResponse(responseCode = "200", description = "Tipo de Transação cadastrada com sucesso")
             }
     )
-    @PostMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
+    @RolesAllowed("user")
+    @PostMapping(value = "/tipos", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<TransacaoTipo> postTransacaoTipo(@RequestBody TransacaoTipo transacaoTipo) {
 
         transacaoTipo = transacaoTipoServico.salvar(transacaoTipo);
@@ -84,14 +85,14 @@ public class TransacaoController {
     }
 
     @Operation(
-            operationId = "transacaoTipoObter",
+            operationId = "transacaoTiposObter",
             summary = "Retorna a lista de tipos de transações",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Tipos de Transações retornadas com sucesso")
             }
     )
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/tipos", produces = APPLICATION_PROBLEM_JSON_VALUE)
+    @GetMapping(value = "/tipos", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TransacaoTipo>> getTransacaoTipos() {
 
         var tipos = transacaoTipoServico.buscarTodos();

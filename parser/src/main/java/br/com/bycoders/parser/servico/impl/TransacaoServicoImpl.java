@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,12 +31,7 @@ public class TransacaoServicoImpl implements TransacaoServico {
 
         List<Transacao> transacoes = ParserUtil.parseFile(multipartFile);
 
-        log.info("Quantidade trasações: {}", transacoes.size());
-
-        Arquivo arquivo = new Arquivo();
-        arquivo.setDataUpload(LocalDateTime.now());
-        arquivo.setNome(multipartFile.getOriginalFilename());
-        arquivo.setUsuarioId(UUID.randomUUID());
+        var arquivo = new Arquivo(multipartFile.getOriginalFilename(), UUID.randomUUID());
 
         var arquivoSalvo = arquivoRepository.save(arquivo);
 
