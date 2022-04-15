@@ -48,7 +48,6 @@ public class ParserUtil {
     }
 
     private Transacao parseToTransacao(String linha) {
-        log.info("{}", linha);
         var tipo = Integer.parseInt(linha.substring(0, 1));
         var dataTransacao = linha.substring(1, 9);
         var valor = Double.parseDouble(linha.substring(9, 19)) / 100;
