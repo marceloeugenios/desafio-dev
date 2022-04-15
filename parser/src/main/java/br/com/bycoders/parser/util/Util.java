@@ -20,9 +20,9 @@ public final class Util {
     }
 
     public boolean isCpfValido(String cpf) {
-        cpf = cpf.replaceAll("[ˆ/d]]", "");
+        cpf = cpf.replaceAll("[^0-9]", "");
         if (verificarValorRepetido(cpf)) {
-            return (false);
+            return false;
         }
 
         char dig10;
@@ -66,7 +66,7 @@ public final class Util {
 
             return (dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10));
         } catch (InputMismatchException erro) {
-            return (false);
+            return false;
         }
     }
 

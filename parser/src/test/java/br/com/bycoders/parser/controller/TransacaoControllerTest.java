@@ -2,9 +2,9 @@ package br.com.bycoders.parser.controller;
 
 import br.com.bycoders.parser.dto.ExtratoDTO;
 import br.com.bycoders.parser.model.TransacaoTipo;
-import br.com.bycoders.parser.util.Util;
 import br.com.bycoders.parser.util.Constantes;
 import br.com.bycoders.parser.util.TransacaoNatureza;
+import br.com.bycoders.parser.util.Util;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
