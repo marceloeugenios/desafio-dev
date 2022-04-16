@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+
+  desafio-dev-db:
+    image: marceloeugenios/desafio-dev-db:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  desafio-dev-be-app:
+    image: marceloeugenios/desafio-dev-be-app:latest
+    ports:
+      - "8088:8080"
+    depends_on:
+      - desafio-dev-db
+  
+#  desafio-dev-fe-app:
+#    image: marceloeugenios/desafio-dev-fe-app:latest
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - desafio-dev-be-app
