@@ -1,5 +1,3 @@
-Atualizacao do readme
-
 # Desafio ByCoders
 
 ## Parseador de CNAB desenvolvido como forma de avaliação para vaga de Desenvolvedor Java Senior
