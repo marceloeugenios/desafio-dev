@@ -56,5 +56,6 @@ Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/m
 
 - Reactjs
 
-> Observação: Arquivo `docker-compose` foi deixado dentro do projeto backend pra ficar mais fácil sua localização
+> Observações:
+> Arquivo `docker-compose` foi deixado dentro do projeto backend pra ficar mais fácil sua localização
 > Dockerfile utilizado para gerar a imagem do banco de dados https://github.com/marceloeugenios/desafio-dev/tree/main/db
