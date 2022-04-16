@@ -78,7 +78,7 @@ public class TransacaoController {
     @PostMapping(value = "/tipos", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<TransacaoTipo> postTransacaoTipo(@RequestBody TransacaoTipo transacaoTipo) {
 
-        transacaoTipo = transacaoTipoServico.salvar(transacaoTipo);
+        transacaoTipo = transacaoTipoServico.salva(transacaoTipo);
 
         return ResponseEntity.ok(transacaoTipo);
 
@@ -95,7 +95,7 @@ public class TransacaoController {
     @GetMapping(value = "/tipos", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TransacaoTipo>> getTransacaoTipos() {
 
-        var tipos = transacaoTipoServico.buscarTodos();
+        var tipos = transacaoTipoServico.buscaTodos();
 
         return ResponseEntity.ok(tipos);
 

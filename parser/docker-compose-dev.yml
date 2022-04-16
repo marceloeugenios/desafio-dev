@@ -10,6 +10,20 @@ services:
        - POSTGRES_USER=postgres
        - POSTGRES_PASSWORD=postgres
 
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:16.1.1
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    restart: always
+    volumes:
+      - keycloak_data:/data
+      - keycloak_data:/opt/jboss/keycloak/providers
+      - keycloak_data:/opt/jboss/keycloak/standalone/configuration
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -19,4 +33,5 @@ services:
     ports:
        - "5555:80"
 
-# docker-compose -f docker-compose-dev.yml
+volumes:
+  keycloak_data:

@@ -21,7 +21,7 @@ public class TransacaoTipoServicoImpl implements TransacaoTipoServico {
 
     @Override
     @Transactional
-    public TransacaoTipo salvar(TransacaoTipo transacaoTipo) {
+    public TransacaoTipo salva(TransacaoTipo transacaoTipo) {
         if (SALDO.equals(transacaoTipo.getTransacaoNatureza())) {
             throw new IllegalArgumentException("Natureza da transação inválida!");
         }
@@ -30,7 +30,7 @@ public class TransacaoTipoServicoImpl implements TransacaoTipoServico {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransacaoTipo> buscarTodos() {
+    public List<TransacaoTipo> buscaTodos() {
         return transacaoTipoRepository.findAll();
     }
 

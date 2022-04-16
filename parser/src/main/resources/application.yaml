@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://desafio-dev-db:5432/desafio_db
+    username: desafio
+    password: desafio
+
+keycloak:
+  auth-server-url: http://206.189.7.110:8080/auth
+  realm: desafio-dev-app
+  resource: desafio-dev-client
+  credentials:
+    secret: ly0epUa9KO4ucOz23XaMGqrozgAfrlxU
+  use-resource-role-mappings: true
+  bearer-only: true
+
+## KeyCloak rodando na digital ocean: http://206.189.7.110:8080/auth
+app:
+  authorization-uri: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
+  user-info-uri: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/userinfo
+  token-uri: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
+  logout: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/logout
+  authorization-grant-type: password
+  scope: profile email
+
+logging:
+  level:
+    root: DEBUG

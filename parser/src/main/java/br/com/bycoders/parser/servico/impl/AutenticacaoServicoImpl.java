@@ -46,17 +46,20 @@ public class AutenticacaoServicoImpl implements AutenticacaoServico {
     @Override
     public AutenticacaoDTO login(Credencial credencial) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("grant_type", grantType);
         map.add("client_id", clientId);
+        map.add("grant_type", grantType);
         map.add("client_secret", clientSecret);
         map.add("username", credencial.getUsuario());
         map.add("password", credencial.getSenha());
 
         try {
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, new HttpHeaders());
-            return restTemplate.postForObject(keycloakTokenUri, request, AutenticacaoDTO.class);
+            var auth = restTemplate.postForObject(keycloakTokenUri, request, AutenticacaoDTO.class);
+            log.info("Retorno KeyCloak: {}", auth);
+            return auth;
         } catch (Exception e) {
-            throw new NaoAutenticadoException("Problema na autenticação!");
+            log.error("Error: ", e);
+            throw new NaoAutenticadoException("Problema na autenticação: " + e.getMessage());
         }
     }
 

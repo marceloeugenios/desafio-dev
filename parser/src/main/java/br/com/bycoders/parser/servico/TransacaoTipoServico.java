@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface TransacaoTipoServico {
 
-    TransacaoTipo salvar(TransacaoTipo transacaoTipo);
+    TransacaoTipo salva(TransacaoTipo transacaoTipo);
 
-    List<TransacaoTipo> buscarTodos();
+    List<TransacaoTipo> buscaTodos();
 
 }

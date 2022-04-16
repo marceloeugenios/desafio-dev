@@ -13,22 +13,22 @@ spring:
     password: desafio
 
 keycloak:
-  auth-server-url: http://localhost:8080
+  auth-server-url: http://206.189.7.110:8080/auth
   realm: desafio-dev-app
   resource: desafio-dev-client
   credentials:
-    secret: Xl399B3uPhGIxULvjDIXyumZB3Kl0ruA
+    secret: ly0epUa9KO4ucOz23XaMGqrozgAfrlxU
   use-resource-role-mappings: true
   bearer-only: true
 
 app:
-  authorization-uri: http://localhost:8080/realms/desafio-dev-app/protocol/openid-connect/token
-  user-info-uri: http://localhost:8080/realms/desafio-dev-app/protocol/openid-connect/userinfo
-  token-uri: http://localhost:8080/realms/desafio-dev-app/protocol/openid-connect/token
-  logout: http://localhost:8080/realms/desafio-dev-app/protocol/openid-connect/logout
+  authorization-uri: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
+  user-info-uri: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/userinfo
+  token-uri: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
+  logout: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/logout
   authorization-grant-type: password
   scope: profile email
 
 logging:
   level:
-    root: INFO
+    root: DEBUG
