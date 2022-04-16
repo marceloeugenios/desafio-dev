@@ -4,7 +4,7 @@ Atualizacao do readme
 
 ## Parseador de CNAB desenvolvido como forma de avaliação para vaga de Desenvolvedor Java Senior
 
-Para rodar o projeto bastar realizar o download ou copiar o conteúdo [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml). Certifique-se de que as portas 8088 (backend), 3000 (frontend) e 5432 (postgresql) estejam disponiveis.
+Para rodar o projeto bastar realizar o download ou copiar o conteúdo [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml). Certifique-se de que as portas 8088 (backend), 3000 (frontend) e 5432 (postgresql) estejam disponíveis.
 Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml) estão as imagens das aplicações backend e frontend além de uma versão "stateless" do PostgreSQL para validar a solução. Para autenticação e autorização a melhor opção foi subir o KeyCloak em um cloud provider para evitar ter que ficar configurando no startup da infraestrutura.
 
 #### Subindo a infraestrutura
@@ -32,7 +32,7 @@ Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/m
 - Readme - https://dillinger.io/
 - Docker - Docker Compose
 - DockerHub
-- DigitalOcean (subi o KeyCloak)
+- DigitalOcean (KeyCloak)
 - Intellij
 
 ##### Backend
