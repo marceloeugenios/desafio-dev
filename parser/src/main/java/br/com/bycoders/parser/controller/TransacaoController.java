@@ -35,7 +35,8 @@ public class TransacaoController {
             summary = "Faz a importação de arquivo txt no layout do **CNAB**",
             description = "Arquivo de exemplo e informações de sua estrutura pode ser encontrado em **https://github.com/marceloeugenios/desafio-dev**.",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Importação realizada com sucesso - Transações cadastradas")
+                    @ApiResponse(responseCode = "201", description = "Importação realizada com sucesso - Transações cadastradas"),
+                    @ApiResponse(responseCode = "400", description = "Arquivo inválido")
             }
     )
     @RolesAllowed("admin")
@@ -72,7 +73,8 @@ public class TransacaoController {
             operationId = "transacaoTipoCadastro",
             summary = "Cadastra Tipo de Transação",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Tipo de Transação cadastrada com sucesso")
+                    @ApiResponse(responseCode = "200", description = "Tipo de Transação cadastrada com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Dados do Tipo de Transação inválidos"),
             }
     )
     @RolesAllowed("user")
