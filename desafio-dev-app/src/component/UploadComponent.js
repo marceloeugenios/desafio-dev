@@ -22,7 +22,6 @@ import HeaderComponent from "../component/HeaderComponent";
 function Upload() {
   const token = JSON.parse(localStorage.getItem("token"));
 
-  // Modal open state
   const [modal, setModal] = useState(false);
   const [arquivo, setArquivo] = useState({
     id: 0,
@@ -30,7 +29,6 @@ function Upload() {
     dataUpload: null,
   });
 
-  // Toggle for Modal
   const toggle = () => setModal(!modal);
 
   const [file, setFile] = useState();
@@ -42,9 +40,12 @@ function Upload() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
     const url = Constantes.UPLOAD_URL;
     const formData = new FormData();
+
     formData.append("arquivo", file);
+
     const config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -57,7 +58,7 @@ function Upload() {
         setArquivo(response.data);
         setModal(true);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         if (error.response) {
           console.log(error.response.data);
           console.log(error.response.status);

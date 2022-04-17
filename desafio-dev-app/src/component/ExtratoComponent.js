@@ -24,7 +24,7 @@ function Extrato() {
     if (token) {
       buscar();
     }
-  }, []);
+  }, [extrato]);
 
   return (
     <>

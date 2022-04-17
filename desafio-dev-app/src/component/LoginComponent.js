@@ -6,14 +6,15 @@ import * as Constantes from "../component/Constantes";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 function Login() {
-  const [login] = useState("desafio");
-  const [senha] = useState("12345");
+  const [user, setUser] = useState();
+  const [senha, setSenha] = useState();
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
-  const changeHandler = (event) => {
+  const handleChange = (event) => {
     if (event.target.name === "usuario") {
-      setLogin(event.target.value);
+      setUser(event.target.value);
     } else {
       setSenha(event.target.value);
     }
@@ -21,33 +22,44 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setError(false);
 
-    const credenciais = { usuario: login, senha: senha };
+    const credenciais = { usuario: user, senha: senha };
 
-    axios.post(Constantes.LOGIN_URL, credenciais).then((response) => {
-      localStorage.setItem(
-        "token",
-        JSON.stringify(response.data["access_token"])
-      );
-      localStorage.setItem(
-        "refresh_token",
-        JSON.stringify(response.data["refresh_token"])
-      );
-      navigate("/extrato", { replace: true });
-    });
+    axios
+      .post(Constantes.LOGIN_URL, credenciais)
+      .then((response) => {
+        localStorage.setItem(
+          "token",
+          JSON.stringify(response.data["access_token"])
+        );
+        localStorage.setItem(
+          "refresh_token",
+          JSON.stringify(response.data["refresh_token"])
+        );
+        navigate("/extrato", { replace: true });
+      })
+      .catch((error) => {
+        setError(true);
+      });
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <FormGroup className="mb-3">
         <Label>Usuário</Label>
+        {error && (
+          <>
+            <br />
+            <span style={{ color: "red" }}>Usuário ou senha inválidos</span>
+          </>
+        )}
         <Input
           type="text"
           name="usuario"
           placeholder="Usuário"
-          value="desafio"
           required
-          onChange={changeHandler}
+          onChange={handleChange}
         />
 
         <Label>Senha</Label>
@@ -55,9 +67,8 @@ function Login() {
           type="password"
           name="senha"
           placeholder="Senha"
-          value="12345"
           required
-          onChange={changeHandler}
+          onChange={handleChange}
         />
       </FormGroup>
       <Button variant="outline-primary" type="submit" size="sm">
