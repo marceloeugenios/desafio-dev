@@ -22,14 +22,16 @@ import HeaderComponent from "../component/HeaderComponent";
 function Upload() {
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const [modal, setModal] = useState(false);
+  const [sucessoModal, setSucessoModal] = useState(false);
+  const [erroModal, setErroModal] = useState(false);
+  const [error, setError] = useState({ data: "" });
   const [arquivo, setArquivo] = useState({
     id: 0,
     nome: "",
     dataUpload: null,
   });
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => setSucessoModal(!sucessoModal);
 
   const [file, setFile] = useState();
   const navigate = useNavigate();
@@ -56,20 +58,23 @@ function Upload() {
       .post(url, formData, config)
       .then((response) => {
         setArquivo(response.data);
-        setModal(true);
+        setErroModal(false);
+        setSucessoModal(true);
       })
-      .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
+      .catch((error) => {
+        setError(error.response.data["message"]);
+        setSucessoModal(false);
+        setErroModal(true);
       });
   }
 
   function handleOk() {
-    setModal(false);
+    setSucessoModal(false);
     navigate("/extrato", { replace: true });
+  }
+
+  function handleOkErro() {
+    setErroModal(false);
   }
 
   return (
@@ -89,7 +94,7 @@ function Upload() {
         </FormGroup>
 
         <div>
-          <Modal isOpen={modal} toggle={toggle}>
+          <Modal isOpen={sucessoModal} toggle={toggle}>
             <ModalHeader toggle={toggle}>
               CNAB Carregado com sucesso
             </ModalHeader>
@@ -101,6 +106,18 @@ function Upload() {
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={handleOk}>
+                OK
+              </Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+
+        <div>
+          <Modal isOpen={erroModal} toggle={toggle}>
+            <ModalHeader toggle={toggle}>Arquivo inválido</ModalHeader>
+            <ModalBody>{error}</ModalBody>
+            <ModalFooter>
+              <Button color="danger" onClick={handleOkErro}>
                 OK
               </Button>
             </ModalFooter>
