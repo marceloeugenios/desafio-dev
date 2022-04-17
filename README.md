@@ -47,7 +47,7 @@ Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/m
 - Readme - https://dillinger.io/
 - Docker - Docker Compose
 - DockerHub
-- DigitalOcean (subi o KeyCloak)
+- DigitalOcean (KeyCloak)
 - Intellij
 
 ##### Backend
