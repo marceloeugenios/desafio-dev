@@ -34,6 +34,16 @@ O Projeto backend pode ser iniciado pela IDE configurando o profile "dev" em var
 spring.profiles.active=dev
 ```
 
+Para o frontend foi utilizado o VSCode e pode ser iniciado usando o comando baixo:
+
+```sh
+npm start
+```
+
+> Foi utilizado a versão v16.14.2 do node, mas no docker estou usando a versão 14 compactada, então não deve necessitar ter uma versão específica local caso deixa executá-lo na sua IDE
+
+> IMPORTANTE: Após executar os projetos não esqueça de parar os containers e limpar as imagens locais.
+
 #### Imagens:
 
 - Backend: https://hub.docker.com/repository/docker/marceloeugenios/desafio-dev-be-app - A publicação da imagem do backend no dockerhub é feito por meio de uma task do gradle
