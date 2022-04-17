@@ -16,7 +16,7 @@ class ParserUtilTest {
     public void deveProcessarArquivoComSucesso() throws IOException {
         var quantidadeTransacoes = 21;
         var arquivo = Constantes.ARQUIVO_ORIGINAL;
-        var multipartFile = new MockMultipartFile("arquivo", arquivo,"multipart/form-data", Util.getConteudoCnab(arquivo));
+        var multipartFile = new MockMultipartFile("arquivo", arquivo, "multipart/form-data", Util.getConteudoCnab(arquivo));
 
         assertEquals(quantidadeTransacoes, parseFile(multipartFile).size());
     }

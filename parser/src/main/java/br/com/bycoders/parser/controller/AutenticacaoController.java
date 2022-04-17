@@ -38,7 +38,7 @@ public class AutenticacaoController {
 
         log.info("Fazendo login: {}", credencial.getUsuario());
 
-        var token =  autenticacaoServico.login(credencial);
+        var token = autenticacaoServico.login(credencial);
 
         return token.map(ResponseEntity::ok)
                 .orElseThrow(() -> new NaoAutenticadoException("Usuário/Senha não encontrado!"));

@@ -15,14 +15,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Object> handleIllegalArgumentException(
             Exception ex, WebRequest request) {
-        return new ResponseEntity<>(
-                "Parametros invalidos para a requisicao", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({NaoAutenticadoException.class})
     public ResponseEntity<Object> handleNaoAutenticadoException(
             Exception ex, WebRequest request) {
-        return new ResponseEntity<>(
-                "Verifique os dados de autenticação", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 }

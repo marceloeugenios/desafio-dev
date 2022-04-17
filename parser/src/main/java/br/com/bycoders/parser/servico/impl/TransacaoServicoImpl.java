@@ -3,9 +3,11 @@ package br.com.bycoders.parser.servico.impl;
 import br.com.bycoders.parser.dto.ExtratoDto;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.Transacao;
+import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.repository.ArquivoRepository;
 import br.com.bycoders.parser.repository.TransacaoRepository;
 import br.com.bycoders.parser.servico.TransacaoServico;
+import br.com.bycoders.parser.servico.TransacaoTipoServico;
 import br.com.bycoders.parser.util.ParserUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,11 +29,15 @@ public class TransacaoServicoImpl implements TransacaoServico {
     private final ArquivoRepository arquivoRepository;
     private final TransacaoRepository transacaoRepository;
 
+    private final TransacaoTipoServico transacaoTipoServico;
+
     @Override
     @Transactional
     public Arquivo uploadTransacao(MultipartFile multipartFile) {
 
         List<Transacao> transacoes = ParserUtil.parseFile(multipartFile);
+
+        validarTiposTransacoes(transacoes);
 
         var arquivo = new Arquivo(multipartFile.getOriginalFilename(), UUID.randomUUID());
 
@@ -48,5 +56,30 @@ public class TransacaoServicoImpl implements TransacaoServico {
     @Transactional(readOnly = true)
     public List<ExtratoDto> extratoPorLoja() {
         return transacaoRepository.extratoAgrupadoPorLoja();
+    }
+
+    private void validarTiposTransacoes(List<Transacao> transacoes) {
+        var tiposTransacoesValidas = transacaoTipoServico.buscaTodos()
+                .stream()
+                .map(TransacaoTipo::getId)
+                .collect(Collectors.toList());
+
+        var transacoesComTiposInvalidos = transacoes.stream()
+                .filter(transacao -> !tiposTransacoesValidas.contains(transacao.getTransacaoTipo().getId()))
+                .map(Transacao::getTransacaoTipo)
+                .map(TransacaoTipo::getId)
+                .collect(Collectors.toSet());
+
+        if (!transacoesComTiposInvalidos.isEmpty()) {
+            var tiposInvalidos = transacoesComTiposInvalidos
+                    .stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(", "));
+
+            var erro = format("Tipos de Transações inválidas: %s", tiposInvalidos);
+
+            log.error("{}", erro);
+            throw new IllegalArgumentException(erro);
+        }
     }
 }

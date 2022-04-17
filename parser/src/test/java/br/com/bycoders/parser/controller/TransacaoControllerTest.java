@@ -35,12 +35,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 class TransacaoControllerTest {
 
+    private static final String BASE_URL = "/api/v1/transacao";
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    private static final String BASE_URL = "/api/v1/transacao";
 
     @Test
     @DisplayName("Arquivo original importado com sucesso")
@@ -71,6 +69,30 @@ class TransacaoControllerTest {
     void whenArquivoInformadoConterAlgumCpfInvalidoThenRetornaBadRequest() throws Exception {
 
         importarArquivoBadRequest(Constantes.ARQUIVO_COM_CPFS_INVALIDOS);
+
+    }
+
+    @Test
+    @DisplayName("Arquivo com tipo de transação '0' invalido retorna erro de validacao")
+    void whenArquivoInformadoConterTipoTransacaoInvalidoThenRetornaBadRequest() throws Exception {
+
+        importarArquivoBadRequest(Constantes.ARQUIVO_COM_TIPOS_TRANSACOES_INVALIDAS);
+
+    }
+
+    @Test
+    @DisplayName("Arquivo com cartao invalido retorna erro de validacao")
+    void whenArquivoInformadoConterCartaoInvalidoThenRetornaBadRequest() throws Exception {
+
+        importarArquivoBadRequest(Constantes.ARQUIVO_COM_CARTAO_INVALIDOS);
+
+    }
+
+    @Test
+    @DisplayName("Arquivo com data/horario invalido retorna erro de validacao")
+    void whenArquivoInformadoConterDataHorarioThenRetornaBadRequest() throws Exception {
+
+        importarArquivoBadRequest(Constantes.ARQUIVO_COM_DATAS_INVALIDAS);
 
     }
 
