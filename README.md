@@ -17,7 +17,7 @@ Para rodar o projeto bastar realizar o download ou copiar o conteúdo [docker-co
 Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml) estão as imagens das aplicações backend e frontend além de uma versão "stateless" do PostgreSQL para validar a solução. Para autenticação e autorização a melhor opção foi subir o KeyCloak em um cloud provider para evitar ter que ficar configurando no startup da infraestrutura.
 
 ```sh
- docker-compose -f docker-compose.yml up
+ docker-compose up
 ```
 
 #### Imagens:
