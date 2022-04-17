@@ -11,13 +11,27 @@ Além das telas necessárias para atender os requisitos do projeto, foi implemen
 
 > Como a vaga é focada em Java, o frontend foi feito apenas para validar o backend. Por isso é simples e não foi pensado em ergonomia, usabilidade e/ou qualquer requisito médio de UI/UX em sua navegabilidade e utilização, além de não ter sido utilizados implementações normalmente utilizadas quando se trata de projetos em react modernos.
 
-#### Subindo a infraestrutura
+#### Subindo a infraestrutura completa
 
 Para rodar o projeto bastar realizar o download ou copiar o conteúdo [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml). Certifique-se de que as portas `8088` (backend), `3000` (frontend) e `5432` (postgresql) estejam disponíveis.
 Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml) estão as imagens das aplicações backend e frontend além de uma versão "stateless" do PostgreSQL para validar a solução. Para autenticação e autorização a melhor opção foi subir o KeyCloak em um cloud provider para evitar ter que ficar configurando no startup da infraestrutura.
 
 ```sh
  docker-compose up
+```
+
+#### Subindo a infraestrutura em desenvolvimento
+
+Para rodar o projeto em desenvolvimento é utilizado o [docker-compose-dev](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose-dev.yml) para subir apenas o banco de dados.
+
+```sh
+ docker-compose -f docker-compose-dev up
+```
+
+O Projeto backend pode ser iniciado pela IDE configurando o profile "dev" em variáveis de ambiente. Com o docker-compose-dev e o projeto iniciados, basta acessar a URL do [swagger](http://localhost:8088/swagger-ui/index.html) para ter acesso aos endpoints.
+
+```sh
+spring.profiles.active=dev
 ```
 
 #### Imagens:
