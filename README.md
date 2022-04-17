@@ -38,8 +38,6 @@ Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/m
 | ------- | ----- |
 | desafio | 12345 |
 
-> O usuário está fixo no login pois não há validação e/ou criação de usuários, então apenas este foi configurado no KeyCloak.
-
 ## Ferramentas / Tecnologias utilizadas
 
 ##### Geral
