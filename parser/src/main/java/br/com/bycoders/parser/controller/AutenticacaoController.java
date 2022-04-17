@@ -1,6 +1,7 @@
 package br.com.bycoders.parser.controller;
 
 import br.com.bycoders.parser.dto.AutenticacaoDTO;
+import br.com.bycoders.parser.error.NaoAutenticadoException;
 import br.com.bycoders.parser.servico.AutenticacaoServico;
 import br.com.bycoders.parser.util.Credencial;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,15 +29,19 @@ public class AutenticacaoController {
             operationId = "login",
             summary = "Faz a autenticacao do usuário na aplicação",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Autenticação realizada com sucesso")
+                    @ApiResponse(responseCode = "200", description = "Autenticação realizada com sucesso"),
+                    @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
             }
     )
     @PostMapping(value = "/login", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<AutenticacaoDTO> login(@Valid @RequestBody Credencial credencial) {
 
+        log.info("Fazendo login: {}", credencial.getUsuario());
+
         var token =  autenticacaoServico.login(credencial);
 
-        return ResponseEntity.ok(token);
+        return token.map(ResponseEntity::ok)
+                .orElseThrow(() -> new NaoAutenticadoException("Usuário/Senha não encontrado!"));
 
     }
 
@@ -51,7 +56,11 @@ public class AutenticacaoController {
     @PostMapping(value = "/logout", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> logout(@RequestParam(name = "refresh_token") String refreshToken) throws Exception {
 
+        log.info("Fazendo logout: {}", refreshToken);
+
         autenticacaoServico.logout(refreshToken);
+
+        log.info("Logoff realizado com sucesso");
 
         return ResponseEntity.ok("{\"mensagem\": \"Logout realizado com sucesso!\"}");
 

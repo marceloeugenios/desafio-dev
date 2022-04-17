@@ -23,6 +23,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleNaoAutenticadoException(
             Exception ex, WebRequest request) {
         return new ResponseEntity<>(
-                "Verifique os dados de autenticação", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+                "Verifique os dados de autenticação", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 }

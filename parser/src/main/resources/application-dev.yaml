@@ -22,13 +22,13 @@ keycloak:
   bearer-only: true
 
 app:
-  authorization-uri: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
-  user-info-uri: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/userinfo
-  token-uri: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
-  logout: http://127.0.0.1:8080/auth/realms/desafio-dev-app/protocol/openid-connect/logout
+  authorization-uri: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
+  user-info-uri: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/userinfo
+  token-uri: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/token
+  logout: http://206.189.7.110:8080/auth/realms/desafio-dev-app/protocol/openid-connect/logout
   authorization-grant-type: password
   scope: profile email
 
 logging:
   level:
-    root: DEBUG
+    root: INFO

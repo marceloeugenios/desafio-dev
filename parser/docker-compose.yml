@@ -18,9 +18,9 @@ services:
     depends_on:
       - desafio-dev-db
   
-#  desafio-dev-fe-app:
-#    image: marceloeugenios/desafio-dev-fe-app:latest
-#    ports:
-#      - "3000:3000"
-#    depends_on:
-#      - desafio-dev-be-app
+  desafio-dev-fe-app:
+    image: marceloeugenios/desafio-dev-fe-app:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - desafio-dev-be-app

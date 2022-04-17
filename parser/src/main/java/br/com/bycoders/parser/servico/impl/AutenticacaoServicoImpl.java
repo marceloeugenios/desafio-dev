@@ -14,49 +14,53 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class AutenticacaoServicoImpl implements AutenticacaoServico {
 
+    public static final String CLIENT_ID = "client_id";
+    public static final String CLIENT_SECRET = "client_secret";
+    public static final String REFRESH_TOKEN = "refresh_token";
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${app.token-uri}")
-    private String keycloakTokenUri;
-
-    @Value("${app.user-info-uri}")
-    private String keycloakUserInfo;
-
-    @Value("${app.logout}")
-    private String keycloakLogout;
-
-    @Value("${app.authorization-grant-type}")
-    private String grantType;
-
+    /**
+     * KeyCloak variables
+     */
     @Value("${keycloak.resource}")
     private String clientId;
-
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
+    /**
+     * Aux app variables
+     */
+    @Value("${app.logout}")
+    private String keycloakLogout;
+    @Value("${app.token-uri}")
+    private String keycloakTokenUri;
+    @Value("${app.user-info-uri}")
+    private String keycloakUserInfo;
+    @Value("${app.authorization-grant-type}")
+    private String grantType;
     @Value("${app.scope}")
     private String scope;
 
-
     @Override
-    public AutenticacaoDTO login(Credencial credencial) {
+    public Optional<AutenticacaoDTO> login(Credencial credencial) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("client_id", clientId);
+        map.add(CLIENT_ID, clientId);
+        map.add(CLIENT_SECRET, clientSecret);
         map.add("grant_type", grantType);
-        map.add("client_secret", clientSecret);
         map.add("username", credencial.getUsuario());
         map.add("password", credencial.getSenha());
 
         try {
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, new HttpHeaders());
             var auth = restTemplate.postForObject(keycloakTokenUri, request, AutenticacaoDTO.class);
-            log.info("Retorno KeyCloak: {}", auth);
-            return auth;
+            return Optional.ofNullable(auth);
         } catch (Exception e) {
             log.error("Error: ", e);
             throw new NaoAutenticadoException("Problema na autenticação: " + e.getMessage());
@@ -66,10 +70,9 @@ public class AutenticacaoServicoImpl implements AutenticacaoServico {
     @Override
     public void logout(String refreshToken) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("client_id", clientId);
-        map.add("client_secret", clientSecret);
-        map.add("refresh_token", refreshToken);
-
+        map.add(CLIENT_ID, clientId);
+        map.add(CLIENT_SECRET, clientSecret);
+        map.add(REFRESH_TOKEN, refreshToken);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
         restTemplate.postForObject(keycloakLogout, request, String.class);
     }
