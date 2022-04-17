@@ -22,7 +22,7 @@ Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/m
 
 #### Imagens:
 
-- Backend: https://hub.docker.com/repository/docker/marceloeugenios/desafio-dev-be-app
+- Backend: https://hub.docker.com/repository/docker/marceloeugenios/desafio-dev-be-app - A publicação da imagem do backend no dockerhub é feito por meio de uma task do gradle
 - Frontend: https://hub.docker.com/repository/docker/marceloeugenios/desafio-dev-fe-app
 - PostgreSQL: https://hub.docker.com/repository/docker/marceloeugenios/desafio-dev-db
 
@@ -47,12 +47,13 @@ Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/m
 - DockerHub
 - DigitalOcean (KeyCloak)
 - Intellij
+- Postman
 
 ##### Backend
 
 - Java 11
 - Spring Boot
-- Gradle
+- Gradle + Dockerhub integration
 - Jacoco
 - Lombok
 - PostgreSQL
