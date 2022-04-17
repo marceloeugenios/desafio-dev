@@ -1,11 +1,20 @@
 # Desafio ByCoders
 
-## Parseador de CNAB desenvolvido como forma de avaliação para vaga de Desenvolvedor Java Senior
+### Projeto desenvolvido como forma de avaliação para vaga de Desenvolvedor Java Senior
+
+A descrição do projeto pode ser encontrada [aqui](https://github.com/ByCodersTec/desafio-dev). Em resumo o projeto tem duas funcionalidades principais:
+
+- Upload de um arquivo CNAB em txt posicional com informações de transações diárias
+- Exibir extrato com o saldo das transações importadas por lojas nos uploads de arquivos
+
+Além das telas necessárias para atender os requisitos do projeto, foi implementado também uma tela simples de login.
+
+> Como a vaga é focada em Java, o frontend foi feito apenas para validar o backend. Por isso é simples e não foi pensado em ergonomia, usabilidade e/ou qualquer requisito médio de UI/UX em sua navegabilidade e utilização, além de não ter sido utilizados implementações normalmente utilizadas quando se trata de projetos em react.
+
+#### Subindo a infraestrutura
 
 Para rodar o projeto bastar realizar o download ou copiar o conteúdo [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml). Certifique-se de que as portas `8088` (backend), `3000` (frontend) e `5432` (postgresql) estejam disponíveis.
 Dentro do [docker-compose](https://github.com/marceloeugenios/desafio-dev/blob/main/parser/docker-compose.yml) estão as imagens das aplicações backend e frontend além de uma versão "stateless" do PostgreSQL para validar a solução. Para autenticação e autorização a melhor opção foi subir o KeyCloak em um cloud provider para evitar ter que ficar configurando no startup da infraestrutura.
-
-#### Subindo a infraestrutura
 
 ```sh
  docker-compose -f docker-compose.yml up
