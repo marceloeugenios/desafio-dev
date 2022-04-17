@@ -6,8 +6,8 @@ import * as Constantes from "../component/Constantes";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 function Login() {
-  const [login, setLogin] = useState("desafio");
-  const [senha, setSenha] = useState("12345");
+  const [login] = useState("desafio");
+  const [senha] = useState("12345");
 
   const navigate = useNavigate();
 
