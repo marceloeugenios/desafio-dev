@@ -1,6 +1,6 @@
 package br.com.bycoders.parser.controller;
 
-import br.com.bycoders.parser.dto.ExtratoDTO;
+import br.com.bycoders.parser.dto.ExtratoDto;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.util.Constantes;
 import br.com.bycoders.parser.util.TransacaoNatureza;
@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -29,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 @WithMockUser(value = "desafio", roles = {"admin", "user"})
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 class TransacaoControllerTest {
@@ -92,7 +94,7 @@ class TransacaoControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        var extrato = objectMapper.readValue(response, new TypeReference<List<ExtratoDTO>>() {
+        var extrato = objectMapper.readValue(response, new TypeReference<List<ExtratoDto>>() {
         });
 
         assertNotNull(extrato);

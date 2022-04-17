@@ -8,7 +8,7 @@
         </layout>
     </appender>
 
-    <logger name="br.com.bycoders" level="debug" additivity="false">
+    <logger name="br.com.bycoders.parser" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 

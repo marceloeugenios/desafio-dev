@@ -1,6 +1,6 @@
 package br.com.bycoders.parser.controller;
 
-import br.com.bycoders.parser.dto.AutenticacaoDTO;
+import br.com.bycoders.parser.dto.AutenticacaoDto;
 import br.com.bycoders.parser.error.NaoAutenticadoException;
 import br.com.bycoders.parser.servico.AutenticacaoServico;
 import br.com.bycoders.parser.util.Credencial;
@@ -34,7 +34,7 @@ public class AutenticacaoController {
             }
     )
     @PostMapping(value = "/login", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<AutenticacaoDTO> login(@Valid @RequestBody Credencial credencial) {
+    public ResponseEntity<AutenticacaoDto> login(@Valid @RequestBody Credencial credencial) {
 
         log.info("Fazendo login: {}", credencial.getUsuario());
 

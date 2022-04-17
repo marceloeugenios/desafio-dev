@@ -1,19 +1,22 @@
 package br.com.bycoders.parser.servico.impl;
 
-import br.com.bycoders.parser.dto.AutenticacaoDTO;
+import br.com.bycoders.parser.dto.AutenticacaoDto;
 import br.com.bycoders.parser.error.NaoAutenticadoException;
 import br.com.bycoders.parser.servico.AutenticacaoServico;
 import br.com.bycoders.parser.util.Credencial;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -49,7 +52,7 @@ public class AutenticacaoServicoImpl implements AutenticacaoServico {
     private String scope;
 
     @Override
-    public Optional<AutenticacaoDTO> login(Credencial credencial) {
+    public Optional<AutenticacaoDto> login(Credencial credencial) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add(CLIENT_ID, clientId);
         map.add(CLIENT_SECRET, clientSecret);
@@ -59,8 +62,10 @@ public class AutenticacaoServicoImpl implements AutenticacaoServico {
 
         try {
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, new HttpHeaders());
-            var auth = restTemplate.postForObject(keycloakTokenUri, request, AutenticacaoDTO.class);
-            return Optional.ofNullable(auth);
+            var authResponse = restTemplate.exchange(keycloakTokenUri, HttpMethod.POST, request,
+                    new ParameterizedTypeReference<AutenticacaoDto>() {
+                    });
+            return Optional.ofNullable(authResponse.getBody());
         } catch (Exception e) {
             log.error("Error: ", e);
             throw new NaoAutenticadoException("Problema na autenticação: " + e.getMessage());
@@ -73,7 +78,9 @@ public class AutenticacaoServicoImpl implements AutenticacaoServico {
         map.add(CLIENT_ID, clientId);
         map.add(CLIENT_SECRET, clientSecret);
         map.add(REFRESH_TOKEN, refreshToken);
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, null);
-        restTemplate.postForObject(keycloakLogout, request, String.class);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, new HttpHeaders());
+        restTemplate.exchange(keycloakLogout, HttpMethod.POST, request,
+                new ParameterizedTypeReference<String>() {
+                });
     }
 }

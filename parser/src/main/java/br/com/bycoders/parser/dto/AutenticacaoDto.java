@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class AutenticacaoDTO {
+public class AutenticacaoDto {
 
     @JsonProperty("access_token")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

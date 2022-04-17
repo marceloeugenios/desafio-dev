@@ -1,6 +1,6 @@
 package br.com.bycoders.parser.controller;
 
-import br.com.bycoders.parser.dto.ExtratoDTO;
+import br.com.bycoders.parser.dto.ExtratoDto;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.TransacaoTipo;
 import br.com.bycoders.parser.servico.TransacaoServico;
@@ -59,7 +59,7 @@ public class TransacaoController {
     )
     @RolesAllowed("user")
     @GetMapping(value = "/extrato", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ExtratoDTO>> getExtratoPorLojas() {
+    public ResponseEntity<List<ExtratoDto>> getExtratoPorLojas() {
 
         var extrato = transacaoServico.extratoPorLoja();
 

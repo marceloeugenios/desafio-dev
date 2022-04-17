@@ -11,7 +11,7 @@ import java.util.Optional;
 @Getter
 @NoArgsConstructor
 @Schema(name = "Extrato")
-public class ExtratoDTO {
+public class ExtratoDto {
 
     @Schema(description = "Nome da Loja", example = "Loja Desafio Dev")
     private String loja;
@@ -23,7 +23,7 @@ public class ExtratoDTO {
     @Schema(description = "Saldo total em reais. Cálculo: ('valor de entrada' - 'valor de saída')", defaultValue = "0", example = "50.0")
     private Double saldo;
 
-    public ExtratoDTO(String lojaNome, Double entrada, Double saida) {
+    public ExtratoDto(String lojaNome, Double entrada, Double saida) {
         this.loja = lojaNome;
         this.entrada = Optional.ofNullable(entrada).orElse(0d);
         this.saida = Optional.ofNullable(saida).orElse(0d);

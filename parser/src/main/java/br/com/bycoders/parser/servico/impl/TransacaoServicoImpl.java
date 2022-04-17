@@ -1,6 +1,6 @@
 package br.com.bycoders.parser.servico.impl;
 
-import br.com.bycoders.parser.dto.ExtratoDTO;
+import br.com.bycoders.parser.dto.ExtratoDto;
 import br.com.bycoders.parser.model.Arquivo;
 import br.com.bycoders.parser.model.Transacao;
 import br.com.bycoders.parser.repository.ArquivoRepository;
@@ -46,7 +46,7 @@ public class TransacaoServicoImpl implements TransacaoServico {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ExtratoDTO> extratoPorLoja() {
+    public List<ExtratoDto> extratoPorLoja() {
         return transacaoRepository.extratoAgrupadoPorLoja();
     }
 }

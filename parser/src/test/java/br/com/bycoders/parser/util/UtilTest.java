@@ -8,37 +8,37 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilTest {
 
     @Test
-    @DisplayName("Quando CPF valido entao retorna true")
+    @DisplayName("Quando CPF valido entao retorna sucesso")
     void whenCpfForValidoThenSucesso() {
-        String cpfValido = "09620676017";
-        assertTrue(Util.isCpfValido(cpfValido));
+        String cpf = "09620676017";
+        assertTrue(Util.isCpfValido(cpf));
     }
 
     @Test
-    @DisplayName("Quando CPF valido com formatacao entao retorna true")
+    @DisplayName("Quando CPF valido com formatacao entao retorna sucesso")
     void whenCpfForValidoComFormatacaoThenSucesso() {
-        String cpfValido = "096.206.760-17";
-        assertTrue(Util.isCpfValido(cpfValido));
+        String cpf = "096.206.760-17";
+        assertTrue(Util.isCpfValido(cpf));
     }
 
     @Test
-    @DisplayName("Quando CPF invalido entao retorna false")
+    @DisplayName("Quando CPF invalido entao retorna erro validacao")
     void whenCpfForInvalidoThenRetornaFalse() {
-        String cpfValido = "09620676019";
-        assertFalse(Util.isCpfValido(cpfValido));
+        String cpf = "09620676019";
+        assertFalse(Util.isCpfValido(cpf));
     }
 
     @Test
-    @DisplayName("Quando CPF invalido com menos digitos entao retorna false")
+    @DisplayName("Quando CPF invalido com menos digitos entao retorna erro validacao")
     void whenCpfForComMenosDigitosThenRetornaFalse() {
-        String cpfValido = "9620676017";
-        assertFalse(Util.isCpfValido(cpfValido));
+        String cpf = "9620676017";
+        assertFalse(Util.isCpfValido(cpf));
     }
 
     @Test
-    @DisplayName("Quando CPF for apenas com digitos repetidos entao retorna false")
+    @DisplayName("Quando CPF for apenas com digitos repetidos entao retorna erro validacao")
     void whenCpfForDigitosRepetidosThenNaoValido() {
-        String cpfValido = "11111111111";
-        assertFalse(Util.isCpfValido(cpfValido));
+        String cpf = "11111111111";
+        assertFalse(Util.isCpfValido(cpf));
     }
 }
