@@ -1,6 +1,4 @@
-# Desafio Dev - ByCoders
-
-### Projeto desenvolvido como forma de avaliação para vaga de Desenvolvedor Java Sênior
+### Projeto desenvolvido utilizando Spring Boot
 
 A descrição do desafio pode ser encontrada [aqui](https://github.com/ByCodersTec/desafio-dev). Em resumo o projeto tem duas funcionalidades principais:
 
@@ -9,7 +7,7 @@ A descrição do desafio pode ser encontrada [aqui](https://github.com/ByCodersT
 
 Além das telas necessárias para atender os requisitos do projeto, foi implementado também uma tela simples de login.
 
-> Como a vaga é focada em Java, o frontend foi feito apenas para validar o backend. Por isso é simples e não foi pensado em ergonomia, usabilidade e/ou qualquer requisito médio de UI/UX em sua navegabilidade e utilização, além de não ter sido utilizados implementações normalmente utilizadas quando se trata de projetos em react modernos.
+> Como meu foco é em Java, o frontend foi feito apenas para validar o backend. Por isso é simples e não foi pensado em ergonomia, usabilidade e/ou qualquer requisito médio de UI/UX em sua navegabilidade e utilização, além de não ter sido utilizados implementações normalmente utilizadas quando se trata de projetos em react modernos.
 
 #### Subindo a infraestrutura completa
 
