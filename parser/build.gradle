@@ -6,7 +6,7 @@ plugins {
     id "com.palantir.docker" version "0.30.0"
 }
 
-group = 'br.com.bycoders'
+group = 'br.com.desafio'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -22,7 +22,7 @@ repositories {
 
 tasks.named("bootJar") {
     enabled = true
-    mainClass = 'br.com.bycoders.parser.FileParserApplication'
+    mainClass = 'br.com.desafio.parser.FileParserApplication'
 }
 
 dependencies {
@@ -84,7 +84,6 @@ docker {
     name "marceloeugenios/desafio-dev-be-app:latest"
     files "parser-${version}.jar"
     tag 'DockerHub', "marceloeugenios/desafio-dev-be-app:latest"
-    noCache true
 }
 
 dockerPrepare {
